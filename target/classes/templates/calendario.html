@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario</title>
+    <link rel="stylesheet" href="/css/estilos.css">
+</head>
+<body>
+<!-- Encabezado -->
+<header class="header">
+    <button class="menu-button" onclick="toggleNav()">&#9776;</button>
+    <div class="icon">
+        <img src="/images/logo.webp" alt="logo" width=145 height=108>
+    </div>
+    <div class="user-section">
+        <div class="user-info" sec:authorize="isAuthenticated()">
+            <div class="user-name"><span sec:authentication="principal.username">Usuario</span></div>
+            <a href="/logout" class="logout-button"><img src="/images/exit.webp" alt="Icono de cerrar sesión" width= 42 height= 42></a>
+        </div>
+        <span sec:authorize="!isAuthenticated()" class="icono-persona" onclick="location.href='/inicioSesion'"style="cursor: pointer;">
+        <img src="/images/logoInisesion.webp" alt="Icono de inicio de sesión" width= 42 height= 42>
+</span>
+    </div>
+</header>
+
+<!-- Menú lateral -->
+<div id="mySidenav" class="sidenav">
+    <form action="/buscar" method="GET" class="busqueda-formMenu">
+        <div class="search-container">
+            <input type="search" id="searchInput" name="query" placeholder="Buscar jugador..." aria-label="Buscar" onkeyup="searchPlayers()" autocomplete="off">
+            <div id="suggestions" style="display: none;"></div>
+        </div>
+        <button type="submit"><strong>Buscar</strong></button>
+    </form>
+    <a onclick="location.href='/index'">Inicio</a>
+    <a onclick="location.href='/calendario'">Calendario</a>
+    <a onclick="location.href='/clasificacion'">Clasificación</a>
+    <a onclick="location.href='/onceideal'">11 ideal</a>
+    <a onclick="location.href='/votaciones'">Votaciones de la jornada</a>
+    <a onclick="location.href='/comentarios'">Comentarios</a>
+</div>
+
+<div id="overlay" class="overlay" onclick="toggleNav()"></div>
+
+<!-- Lista de equipos -->
+<div class="contenidoPrincipal">
+<!-- Lista de equipos -->
+    <div class="teams-carousel">
+        <div class="teams-list">
+            <div th:each="equipoEscudo : ${equipoEscudo}">
+                <a th:href="@{/equipo/{nombre}(nombre=${equipoEscudo.nombre})}">
+                    <img th:src="${equipoEscudo.escudo}" alt="Escudo de ${equipoEscudo.nombre}" width="50" height="50" />
+                </a>
+            </div>
+        </div>
+    </div>
+     <!-- Secciones Partidos y Clasificación -->
+        <!-- Partidos de la jornada -->
+    <section class="partidosCalendario">
+        <h2>Partidos de la jornada</h2>
+        <form action="/calendario" method="GET">
+            <select name="equipo" onchange="this.form.submit()">
+                <option value="">Seleccionar equipo</option>
+                <option th:each="equipo : ${equipos}"
+                        th:value="${equipo.nombre}"
+                        th:text="${equipo.nombre}"
+                        th:selected="${equipoSeleccionado != null && equipoSeleccionado == equipo.nombre}"></option>
+            </select>
+        </form>
+        <div th:each="partido : ${partidos}" class="partido">
+            <div class="partido-contenido">
+                <div class="rectangulo">
+                    <span class="equipo-izquierda">
+                        <img th:src="${partido.equipoCasa.escudo}" alt="Escudo de ${partido.equipoCasa.nombre}" width="25" height="25" class="equipo-escudoRes">
+                        <strong th:text="${partido.equipoCasa.nombre}"></strong>
+                    </span>
+                    <div th:if="${partido.gol_local != null}" class="resultado-cal">
+                        <strong th:text="${partido.gol_local}"></strong>
+                        <strong>:</strong>
+                        <strong th:text="${partido.gol_visitante}"></strong>
+                    </div>
+                    <div th:if="${partido.gol_local == null}" class="vs">
+                        <strong>VS</strong>
+                    </div>
+                    <span class="equipo-derecha">
+                         <strong th:text="${partido.equipoFuera.nombre}"></strong>
+                        <img th:src="${partido.equipoFuera.escudo}" alt="Escudo de ${partido.equipoFuera.nombre}" width="25" height="25" class="equipo-escudoRes">
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+<script src="/js/script.js"></script>
+</body>
+
+
+
+<footer class="footer">
+    <div class="footer-content">
+        <div class="contact-info">
+            <h3>Contacto</h3>
+            <p>Teléfono: +34 123 456 789</p>
+            <p>Email: contacto@laliga.com</p>
+        </div>
+        <div class="social-media">
+            <h3>Síguenos</h3>
+            <a href="https://facebook.com" target="_blank">Facebook</a>
+            <a href="https://twitter.com" target="_blank">Twitter</a>
+            <a href="https://instagram.com" target="_blank">Instagram</a>
+        </div>
+        <div class="additional-info">
+            <h3>Más información</h3>
+            <a href="#">Términos y Condiciones</a>
+            <a href="#">Política de Privacidad</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 La Liga. Todos los derechos reservados.</p>
+    </div>
+</footer>
+</html>

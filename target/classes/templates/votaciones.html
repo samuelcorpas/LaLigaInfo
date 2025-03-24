@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>votaciones</title>
+    <link rel="stylesheet" href="/css/estilos.css">
+</head>
+<body>
+<!-- Encabezado -->
+<header class="header">
+    <button class="menu-button" onclick="toggleNav()">&#9776;</button>
+    <div class="icon">
+        <img src="/images/logo.webp" alt="logo" width=145 height=108>
+    </div>
+    <div class="user-section">
+        <div class="user-info" sec:authorize="isAuthenticated()">
+            <div class="user-name"><span sec:authentication="principal.username">Usuario</span></div>
+            <a href="/logout" class="logout-button"><img src="/images/exit.webp" alt="Icono de cerrar sesión" width= 42 height= 42></a>
+        </div>
+        <span sec:authorize="!isAuthenticated()" class="icono-persona" onclick="location.href='/inicioSesion'"style="cursor: pointer;">
+        <img src="/images/logoInisesion.webp" alt="Icono de inicio de sesión" width= 42 height= 42>
+</span>
+    </div>
+</header>
+
+<!-- Menú lateral -->
+<div id="mySidenav" class="sidenav">
+    <form action="/buscar" method="GET" class="busqueda-formMenu">
+        <div class="search-container">
+            <input type="search" id="searchInput" name="query" placeholder="Buscar jugador..." aria-label="Buscar" onkeyup="searchPlayers()" autocomplete="off">
+            <div id="suggestions" style="display: none;"></div>
+        </div>
+        <button type="submit"><strong>Buscar</strong></button>
+    </form>
+    <a onclick="location.href='/index'">Inicio</a>
+    <a onclick="location.href='/calendario'">Calendario</a>
+    <a onclick="location.href='/clasificacion'">Clasificación</a>
+    <a onclick="location.href='/onceideal'">11 ideal</a>
+    <a onclick="location.href='/votaciones'">Votaciones de la jornada</a>
+    <a onclick="location.href='/comentarios'">Comentarios</a>
+</div>
+
+<div id="overlay" class="overlay" onclick="toggleNav()"></div>
+
+<!-- Lista de equipos -->
+<div class="contenidoPrincipal">
+<!-- Lista de equipos -->
+    <div class="teams-carousel">
+        <div class="teams-list">
+            <div th:each="equipoEscudo : ${equipoEscudo}">
+                <a th:href="@{/equipo/{nombre}(nombre=${equipoEscudo.nombre})}">
+                    <img th:src="${equipoEscudo.escudo}" alt="Escudo de ${equipoEscudo.nombre}" width="50" height="50" />
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="containerEquipoVot">
+        <div class="leftVotaciones">
+            <div class="contCuadradoVot">
+                <section class="partidosEquipoVot">
+                    <h2>Votaciones de la jornada</h2>
+                </section>
+                    <div class = "rectanguloEquipoVot">
+                        <h2>Vote por el jugador de la jornada</h2>
+                    </div>
+                    <form action="/buscar2" method="GET" class="busqueda-form2">
+                        <div class="mensaje-condicional" th:if="${mensajeJugador}">[[${mensajeJugador}]]</div>
+                        <div class="contenedor-busqueda-votos">
+                            <input type="search" id="searchInputVotos" name="query" placeholder="Buscar jugador..." aria-label="Buscar" onkeyup="searchPlayersVotos()" autocomplete="off">
+                            <button type="submit"><strong>Votar</strong></button>
+                            <div id="suggestionsVotos" class="suggestions-boxVotos" style="display: none;"></div> <!-- Contenedor de sugerencias -->
+                        </div>
+                    </form>
+                    <div class = "rectanguloEquipoVot">
+                        <h2>Vote por el equipo de la jornada</h2>
+                    </div>
+                    <form action="/buscar3" method="GET" class="busqueda-form2">
+                        <div class="mensaje-condicional" th:if="${mensajeEquipo}">[[${mensajeEquipo}]]</div>
+                        <div class="mensaje-condicional" th:if="${error}">[[${error}]]</div>
+                        <div class="contenedor-busqueda-votos">
+                            <input type="search" id="searchInputVotosEquipo" name="query" placeholder="Buscar equipo..." aria-label="Buscar" onkeyup="searchPlayersVotosEquipo()" autocomplete="off">
+                            <button type="submit"><strong>Votar</strong></button>
+                            <div id="suggestionsVotosEquipo" class="suggestions-boxVotos" style="display: none;"></div> <!-- Contenedor de sugerencias -->
+                        </div>
+                    </form>
+            </div>
+        </div>
+        <div class="rightVotaciones">
+            <div class = "rectanguloEquipoVot11">
+                <h2>Vote por el 11 de la jornada</h2>
+            </div>
+            <div class="contequipoIzquierdo">
+                <img src="/images/campofurbol.webp" alt="campo futbol " width=680 height=410>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/script.js"></script>
+</body>
+
+
+
+<footer class="footer">
+    <div class="footer-content">
+        <div class="contact-info">
+            <h3>Contacto</h3>
+            <p>Teléfono: +34 123 456 789</p>
+            <p>Email: contacto@laliga.com</p>
+        </div>
+        <div class="social-media">
+            <h3>Síguenos</h3>
+            <a href="https://facebook.com" target="_blank">Facebook</a>
+            <a href="https://twitter.com" target="_blank">Twitter</a>
+            <a href="https://instagram.com" target="_blank">Instagram</a>
+        </div>
+        <div class="additional-info">
+            <h3>Más información</h3>
+            <a href="#">Términos y Condiciones</a>
+            <a href="#">Política de Privacidad</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 La Liga. Todos los derechos reservados.</p>
+    </div>
+</footer>
+</html>

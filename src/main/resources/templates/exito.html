@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro Exitoso</title>
+  <link rel="stylesheet" href="/css/estilos.css">
+</head>
+<header class="header">
+  <button class="menu-button" onclick="toggleNav()">&#9776;</button>
+  <div class="icon">
+    <img src="/images/logo.webp" alt="logo" width=145 height=108>
+  </div>
+  <div class="user-section">
+    <div class="user-info" sec:authorize="isAuthenticated()">
+      <div class="user-name"><span sec:authentication="principal.username">Usuario</span>!</div>
+      <a href="/logout" class="logout-button">Cerrar sesión</a>
+    </div>
+    <span sec:authorize="!isAuthenticated()" class="icono-persona" onclick="location.href='/inicioSesion'"style="cursor: pointer;">
+        <img src="/images/logoInisesion.webp" alt="Icono de inicio de sesión" width= 42 height= 42>
+</span>
+  </div>
+</header>
+<body>
+<div class="registro-exitoso-container">
+  <div class="recuadro-exito">
+    <h2>¡Registro Exitoso!</h2>
+    <p th:text="${mensaje}"></p>
+  </div>
+  <a href="/inicioSesion" class="boton-iniciar-sesion">Iniciar Sesión</a>
+</div>
+</body>
+</html>

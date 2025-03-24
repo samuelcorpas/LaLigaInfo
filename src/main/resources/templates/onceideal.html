@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>onceideal</title>
+    <link rel="stylesheet" href="/css/estilos.css">
+</head>
+<body>
+<!-- Encabezado -->
+<header class="header">
+    <button class="menu-button" onclick="toggleNav()">&#9776;</button>
+    <div class="icon">
+        <img src="/images/logo.webp" alt="logo" width=145 height=108>
+    </div>
+    <div class="user-section">
+        <div class="user-info" sec:authorize="isAuthenticated()">
+            <div class="user-name"><span sec:authentication="principal.username">Usuario</span></div>
+            <a href="/logout" class="logout-button"><img src="/images/exit.webp" alt="Icono de cerrar sesión" width= 42 height= 42></a>
+        </div>
+        <span sec:authorize="!isAuthenticated()" class="icono-persona" onclick="location.href='/inicioSesion'"style="cursor: pointer;">
+        <img src="/images/logoInisesion.webp" alt="Icono de inicio de sesión" width= 42 height= 42>
+</span>
+    </div>
+</header>
+
+<!-- Menú lateral -->
+<div id="mySidenav" class="sidenav">
+    <form action="/buscar" method="GET" class="busqueda-formMenu">
+        <div class="search-container">
+            <input type="search" id="searchInput" name="query" placeholder="Buscar jugador..." aria-label="Buscar" onkeyup="searchPlayers()" autocomplete="off">
+            <div id="suggestions" style="display: none;"></div>
+        </div>
+        <button type="submit"><strong>Buscar</strong></button>
+    </form>
+    <a onclick="location.href='/index'">Inicio</a>
+    <a onclick="location.href='/calendario'">Calendario</a>
+    <a onclick="location.href='/clasificacion'">Clasificación</a>
+    <a onclick="location.href='/onceideal'">11 ideal</a>
+    <a onclick="location.href='/votaciones'">Votaciones de la jornada</a>
+    <a onclick="location.href='/comentarios'">Comentarios</a>
+</div>
+
+<div id="overlay" class="overlay" onclick="toggleNav()"></div>
+
+<div class="contenidoPrincipal">
+    <!-- Lista de equipos -->
+    <div class="teams-carousel">
+        <div class="teams-list">
+            <div th:each="equipoEscudo : ${equipoEscudo}">
+                <a th:href="@{/equipo/{nombre}(nombre=${equipoEscudo.nombre})}">
+                    <img th:src="${equipoEscudo.escudo}" alt="Escudo de ${equipoEscudo.nombre}" width="50" height="50" />
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="containerEquipoVot">
+        <div class="left11">
+            <div class="tituloIzqGeneral">
+                <h2>Resultados de las votaciones</h2>
+            </div>
+            <div class="tituloIzq">
+                <h2>11 de la jornada</h2>
+            </div>
+            <div class="contequipoIzquierdo">
+                <img src="/images/campofurbol.webp" alt="campo futbol " width=780 height=470>
+            </div>
+        </div>
+        <div class="right11">
+            <div class="contCuadrado">
+                <section class="partidosEquipo2" th:if="${equipoMasVotado != null}">
+                    <h2>Mejor equipo de la jornada</h2>
+                    <img th:src="${equipoMasVotado.id.equipo.escudo}" alt="Escudo del equipo">
+                    <h3 th:text="${equipoMasVotado.id.equipo}">Nombre equipo</h3>
+                </section>
+                <section class="partidosEquipo2" th:if="${equipoMasVotado == null}">
+                    <div class ="cuadrado"></div>
+                    <h3>No hay votos registrados para el mejor equipo de la jornada.</h3>
+                </section>
+                <section class="partidosEquipo2" th:if="${jugadorMasVotado != null}">
+                    <h2>Mejor jugador de la jornada</h2>
+                    <img th:src="${jugadorMasVotado.id.jugador.imagen}" alt="Foto del jugador">
+                    <h3 th:text="${jugadorMasVotado.id.jugador.nombre}">Nombre del jugador</h3>
+                </section>
+                <section class="partidosEquipo2" th:if="${jugadorMasVotado == null}">
+                    <div class ="cuadrado"></div>
+                    <h3>No hay votos registrados para el mejor jugador de la jornada.</h3>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/script.js"></script>
+</body>
+
+
+
+<footer class="footer">
+    <div class="footer-content">
+        <div class="contact-info">
+            <h3>Contacto</h3>
+            <p>Teléfono: +34 123 456 789</p>
+            <p>Email: contacto@laliga.com</p>
+        </div>
+        <div class="social-media">
+            <h3>Síguenos</h3>
+            <a href="https://urldefense.com/v3/__https://facebook.com__;!!D9dNQwwGXtA!UikElYBc9H5eBnL13GHjBLfLyUUhkEzkcBvZ9TTriDRSyOLUqJwVPqMrrHa0MSwBMKdQjHgQmuHwUPDwRuSg$" target="_blank">Facebook</a>
+            <a href="https://urldefense.com/v3/__https://twitter.com__;!!D9dNQwwGXtA!UikElYBc9H5eBnL13GHjBLfLyUUhkEzkcBvZ9TTriDRSyOLUqJwVPqMrrHa0MSwBMKdQjHgQmuHwUOFa2lQL$" target="_blank">Twitter</a>
+            <a href="https://urldefense.com/v3/__https://instagram.com__;!!D9dNQwwGXtA!UikElYBc9H5eBnL13GHjBLfLyUUhkEzkcBvZ9TTriDRSyOLUqJwVPqMrrHa0MSwBMKdQjHgQmuHwUM78FPED$" target="_blank">Instagram</a>
+        </div>
+        <div class="additional-info">
+            <h3>Más información</h3>
+            <a href="#">Términos y Condiciones</a>
+            <a href="#">Política de Privacidad</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 La Liga. Todos los derechos reservados.</p>
+    </div>
+</footer>
+</html>

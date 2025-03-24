@@ -1,0 +1,1632 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.contenidoPrincipal {
+    margin-top: 120px; /* Espacio equivalente a la altura de la cabecera */
+    /*padding: 20px;*/
+}
+
+body {
+    font-family: Arial, sans-serif;
+    height: 100%;
+    margin: 0;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+}
+
+/* Estilos existentes */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ff4d4d;
+    padding: 20px;
+    height: 120px;
+    width: 100%;
+    top: 0;
+    border-bottom: 4px solid #333;
+    position: fixed;
+    z-index: 2; /* Asegura que esté encima del menú */
+}
+
+.menu-button {
+    font-size: 50px;
+    font-weight: bold;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* Estilos del menú lateral */
+.sidenav {
+    position: fixed;
+    top: 120px; /* Ajusta esta altura según la altura de la cabecera */
+    left: 0;
+    height: calc(100% - 120px); /* Resta la altura de la cabecera */
+    width: 0;
+    /*justify-items: center;*/
+    background-color: #444444;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 20px;
+    z-index:3; /* Asegura que esté debajo de la cabecera */
+    scrollbar-width: auto; /* Ancho de la barra de desplazamiento */
+    scrollbar-color: #ff4d4d #f1f1f1; /* Color del 'thumb' y del fondo */
+
+}
+.busqueda-formMenu {
+    position: relative;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    gap: 10px;
+}
+
+.search-container {
+    position: relative;
+    width: 100%; /* Asegura que el contenedor de búsqueda ocupe el mismo ancho que el campo de búsqueda */
+}
+
+.busqueda-formMenu input[type="search"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 3px solid #ff4d4d;
+    border-radius: 15px;
+    transition: border-color 0.3s, box-shadow 0.3s; /* Añade una transición suave para el enfoque */
+}
+
+/* Cambia el estilo del borde cuando el input está enfocado */
+.busqueda-formMenu input[type="search"]:focus {
+    border-color: #d9534f; /* Cambia a un color más oscuro o diferente cuando se enfoca */
+    outline: none; /* Elimina el contorno por defecto del navegador */
+    box-shadow: 0 0 5px rgba(255, 77, 77, 0.5); /* Añade una sombra suave */
+}
+
+
+.busqueda-formMenu button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ff4d4d;
+    border: 2px solid #ff4d4d;
+    color: white;
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.busqueda-formMenu button:hover {
+    background-color: white;
+    border: 2px solid #ff4d4d;
+    color: #ff4d4d;
+}
+
+#suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    color: #333333;
+    font-weight: bold;
+    background-color: #f9f9f9;
+    width: 100%; /* Toma el ancho de `search-container`, solo el ancho del campo de búsqueda */
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    border: 3px solid #ff4d4d;
+    border-radius: 15px 0 0 15px;
+    scrollbar-width: auto; /* Ancho de la barra de desplazamiento */
+    scrollbar-color: #ff4d4d #f1f1f1; /* Color del 'thumb' y del fondo */
+}
+
+.suggestion-item {
+    padding: 20px; /* Aumenta el padding si deseas un espacio interno mayor */
+    line-height: 2.0; /* Aumenta el espacio entre líneas, puede ayudar a hacer que el elemento parezca más alto */
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.suggestion-item:hover {
+    background-color: #ff4d4d !important;
+    color: #f9f9f9;
+}
+
+.sidenav a {
+    padding: 31px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #f9f9f9;
+    font-weight: bold;
+    display: block;
+    transition: 0.3s;
+    text-align: left; /* Alineación izquierda de los enlaces */
+}
+
+.sidenav a:hover {
+    background-color: #f9f9f9;
+    color: #ff4d4d;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 36px;
+    color: white;
+    cursor: pointer;
+}
+
+.overlay {
+    position: fixed;
+    top: 120px; /* Ajusta según la altura de la cabecera */
+    left: 0;
+    width: 100%;
+    height: calc(100% - 120px);
+    background-color: rgba(0, 0, 0, 0.5);;
+    display: none;
+    z-index: 2; /* Colocado detrás del menú lateral pero delante del contenido */
+}
+.icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
+
+.login-button {
+    display: inline-flex;            /* Cambiado a flex en lugar de inline-flex */
+    align-items: center;      /* Centrar verticalmente el contenido */
+    gap: 10px;                /* Espacio entre icono y texto */
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    margin-right: 20px;       /* Espacio derecho del botón */
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;   /* Para que el nombre y cerrar sesión estén en columna */
+    align-items: flex-end;    /* Alinea a la derecha dentro del contenedor */
+    color: white;
+}
+/* Estilo para el mensaje de bienvenida */
+.user-info .user-name {
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+}
+.admin-name{
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+}
+/* Estilo para el botón de cerrar sesión */
+.logout-button {
+    font-size: 14px;
+    color: #ffcccc;          /* Color más suave para diferenciar del mensaje de bienvenida */
+    text-decoration: none;
+}
+.logout-button:hover {
+    color: white;
+    text-decoration: underline;  /* Añadir subrayado al pasar el cursor */
+}
+
+.icono-persona {
+    font-size: 24px;
+    margin-right: 8px;
+    color: white;
+    cursor: pointer;
+}
+
+.teams-carousel {
+    background-color: #444;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    overflow-x: auto;
+}
+
+.teams-list {
+    display: flex;
+    justify-content: space-around;
+    white-space: nowrap;
+}
+/*------------------------------------------------------------------------------------------------------------------------------*/
+.container {
+    display: flex;              /* Utiliza Flexbox para alinear los elementos en línea */
+    align-items: stretch;       /* Asegura que todos los elementos se estiren a la altura del contenedor */
+    height: calc(100vh - 120px);
+    background-color: #f9f9f9;
+}
+
+.teams-list span {
+    padding: 10px;
+    background-color: #ff4d4d;
+    border-radius: 50%;
+    margin: 0 2px;
+}
+
+.line {
+    width: 2px;                /* Ancho de la línea */
+    background-color: #ff4d4d;   /* Color de la línea */
+    height: 100%;             /* Altura de la línea (100% de la altura de la ventana) */
+    margin: 0 20px;            /* Espacio alrededor de la línea */
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.partidos, .clasificacion {
+    width: 45%;
+    text-align: center;
+    overflow-y: auto;
+    flex: 1;                   /* Permite que los contenedores de contenido ocupen el espacio restante */
+    padding: 20px;             /* Espacio interno */
+    margin-bottom: 60px; /* Espacio de separación con el footer */
+    scrollbar-width: auto; /* Ancho de la barra de desplazamiento */
+    scrollbar-color: #ff4d4d #f1f1f1; /* Color del 'thumb' y del fondo */
+}
+
+.partidos h2, .clasificacion h2 {
+    color: #333333;
+    display: inline-block;
+    font-size: xx-large;
+    border-bottom: 4px solid #333;
+    margin-bottom: 10px;
+}
+
+.partidos select {
+    display: block;
+    width: 45%;
+    border: 3px solid #333333;
+    color: #ff4d4d;
+    background-color: white;
+    padding: 10px;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right:auto;
+    margin-bottom: 50px;
+    font-size: 16px;
+    border-radius: 15px; /* Bordes redondeados */
+}
+/*
+.partidos select::after {
+    content: "▼";
+    position: absolute;
+    right: 10px;
+    top: calc(50% - 10px);
+    pointer-events: none;
+}
+
+
+form {
+    display: inline-block;
+}*/
+
+.partidos select:focus {
+    border-color: #ff4d4d; /* Cambia el color del borde */
+    outline: none; /* Elimina el contorno predeterminado */
+}
+
+.partido {
+    display: flex;               /* Usa flexbox para alinear elementos */
+    justify-content: center;     /* Centra el contenido */
+    /* margin: 20px 0;     */        /* Margen arriba y abajo */
+    width: 100%;
+}
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+.partidosCalendario {
+    width: 100%;
+    text-align: center;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+    flex: 1;                   /* Permite que los contenedores de contenido ocupen el espacio restante */
+    padding: 20px;             /* Espacio interno */
+}
+
+.partidosCalendario h2 {
+    color: #333333;
+    display: inline-block;
+    font-size: xx-large;
+    border-bottom: 4px solid #333;
+    margin-bottom: 10px;
+}
+
+.partidosCalendario select {
+    display: block;
+    width: 45%;
+    border: 3px solid #333;
+    background-color: white;
+    color: #ff4d4d;
+    padding: 10px;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right:auto;
+    margin-bottom: 50px;
+    font-size: 16px;
+    border-radius: 15px;
+}
+
+.partidosCalendario select:focus {
+    border-color: #ff4d4d; /* Cambia el color del borde */
+    outline: none; /* Elimina el contorno predeterminado */
+}
+
+.partido-contenido {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.equipo-izquierda, .equipo-derecha {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.equipo-izquierda {
+    justify-content: flex-start;  /* Alinea a la izquierda */
+    margin-left: 5px;
+}
+
+.equipo-derecha {
+    justify-content: flex-end;    /* Alinea a la derecha */
+    margin-right: 5px;
+}
+
+.equipo-derecha strong{
+    margin-right: 10px;
+}
+
+.equipo-izquierda strong{
+    margin-left: 10px;
+}
+
+.vs {
+    flex: 0;
+    text-align: center;
+    margin: 0 10px;
+}
+
+.resultado-cal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px;
+}
+
+.resultado-cal strong {
+    color: #333333; /* Cambia esto al color que desees */
+    font-weight: bold;
+    font-size: large;
+    margin: 0 5px; /* Añade separación entre los números y los dos puntos */
+}
+
+.rectangulo {
+    width: 90%;
+    height: 40px;
+    background-color: white;
+    color: #333;
+    border: 3px solid #ff4d4d;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: auto;
+    margin-bottom: 50px;
+    border-radius: 5px;
+}
+
+.escudo-equipoRes {
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+
+
+/*----------------------------------------------------------------------------------------------------------------------------------------*/
+.clasificacion table, .clasificacionGeneral table {
+    width: 90%;
+    table-layout: fixed;    /* Respeta los anchos de columna establecidos */
+    border-collapse: collapse;
+    margin: auto;
+    margin-top: 30px;
+    background-color: white;
+}
+
+.clasificacion th, .clasificacionGeneral th {
+    color: #ff4d4d;
+    border: 3px solid #ff4d4d;
+    text-align: center;
+    padding: 8px;
+    max-height: 50vh; /* Limitar la altura máxima a la mitad del viewport */
+    /*overflow-y: auto; /* Hacer que la tabla tenga un scroll interno si es necesario */
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+.clasificacion table, td, .clasificacionGeneral table, td {
+    border: 3px solid #ff4d4d;
+    text-align: left;
+    padding: 8px;
+    font-weight: bold;
+    max-height: 50vh; /* Limitar la altura máxima a la mitad del viewport */
+    overflow-y: auto; /* Hacer que la tabla tenga un scroll interno si es necesario */
+}
+
+.clasificacionGeneral {
+    width: 80%;
+    table-layout: fixed;    /* Respeta los anchos de columna establecidos */
+    justify-content: center; /* Centra el contenido horizontalmente */
+    text-align: center;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+    flex: 1;                   /* Permite que los contenedores de contenido ocupen el espacio restante */
+    padding: 20px;             /* Espacio interno */
+    margin: 20px auto;
+}
+
+.clasificacionGeneral h2 {
+    color: #333333;
+    display: inline-block;
+    font-size: xx-large;
+    border-bottom: 4px solid #333;
+    margin-bottom: 10px;
+}
+/* Asignar ancho a la columna de nombre del equipo */
+/* Forzar ancho específico para la columna de Nombre del equipo */
+.clasificacionGeneral table th:nth-child(2),
+.clasificacionGeneral table td:nth-child(2){
+    /*min-width: 300px;  Asegura que esta columna sea la más ancha */
+    width: 60%; /* Limita el ancho máximo para esta columna */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    overflow: hidden; /* Oculta el desbordamiento */
+    text-overflow: ellipsis; /* Añade "..." si el texto es demasiado largo */
+}
+.clasificacion table th:nth-child(2),
+.clasificacion table td:nth-child(2){
+    width: 50%; /* Limita el ancho máximo para esta columna */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    overflow: hidden; /* Oculta el desbordamiento */
+    text-overflow: ellipsis; /* Añade "..." si el texto es demasiado largo */
+}
+.clasificacionGeneral table th:nth-child(1),
+.clasificacionGeneral table td:nth-child(1),
+.clasificacionGeneral table th:nth-child(3),
+.clasificacionGeneral table td:nth-child(3),
+.clasificacionGeneral table th:nth-child(4),
+.clasificacionGeneral table td:nth-child(4),
+.clasificacionGeneral table th:nth-child(5),
+.clasificacionGeneral table td:nth-child(5){
+    width: 10%; /* Ancho fijo para las demás columnas */
+    text-align: center;
+}
+.clasificacion table th:nth-child(1),
+.clasificacion table td:nth-child(1),
+.clasificacion table th:nth-child(3),
+.clasificacion table td:nth-child(3),
+.clasificacion table th:nth-child(4),
+.clasificacion table td:nth-child(4),
+.clasificacion table th:nth-child(5),
+.clasificacion table td:nth-child(5){
+    width: 14%;
+    text-align: center;
+}
+
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+.login-container-IniSesion h2{
+    margin: 20px auto;
+    color: #ff4d4d;
+}
+
+/* Estilo general del contenedor solo para inicio de sesión */
+.login-container-IniSesion {
+    width: 400px;
+    margin: 100px auto; /* Centra el contenedor horizontalmente */
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px #ff4d4d;/*rgba(0, 0, 0, 0.1); /* Añade sombra */
+    text-align: center;
+}
+
+/* Estilo de los elementos de input y botón solo para inicio de sesión */
+.input-container-IniSesion {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.login-container-IniSesion label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.login-container-IniSesion input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ff4d4d;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Botón solo para el inicio de sesión */
+.btn-IniSesion {
+    width: 54%;
+    padding: 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border: 2px solid #ff4d4d;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px 20px;
+}
+
+.btn-IniSesion:hover {
+    background-color: white;
+    border: 2px solid #ff4d4d;
+    color: #ff4d4d;
+}
+
+/* Estilo para el botón de iniciar sesión */
+.boton-iniciar-sesion {
+    padding: 12px 24px;
+    font-size: 18px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+.boton-iniciar-sesion:hover {
+    background-color: white;
+    border: 2px solid #ff4d4d;
+    color: #ff4d4d;
+}
+
+.btn-IniSesionAdmin{
+    width: auto;
+    padding: 4px;
+    background-color: #EBEBEB;
+    color: black;
+    border: 2px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 10px;
+    margin: 10px 0;
+    text-align: right;
+}
+
+.btn-IniSesionAdmin:hover{
+    background-color: black;
+    border: 2px solid black;
+    color: white;
+}
+
+/* Contenedor para centrar el mensaje de registro exitoso */
+.registro-exitoso-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 120px); /* Resta la altura de la cabecera */
+    text-align: center;
+}
+/* Estilo del recuadro de éxito */
+.recuadro-exito {
+    background-color: white;
+    color: #333;
+    border: 3px solid #ff4d4d;
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+
+/*.containerEquipo {
+    display: flex;
+    min-height: calc(100vh - 120px);
+    background-color: #f9f9f9;
+    width: 100%;
+}
+
+.left {
+    width: 60%;
+    height: 100%;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  Alinea horizontalmente
+    /*align-items: center; Alinea verticalmente
+}
+
+.tituloIzq {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    flex-shrink: 0;  Evita que el contenedor del título se encoja
+}
+
+.tituloIzq h2 {
+    color: #ff4d4d;
+    display: inline-block;
+    border-bottom: 3px solid #333;
+    /*padding-top: 20px;
+    margin: 10px 0;
+}
+
+.tituloIzqGeneral {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    flex-shrink: 0; /* Evita que el contenedor del título se encoja
+}
+
+.tituloIzqGeneral h2 {
+    color: #333333;
+    display: inline-block;
+    border-bottom: 4px solid #333;
+    font-size: xx-large;
+    margin-top: 10px;
+}
+
+.contequipoIzquierdo {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: flex;            /* Activa flexbox
+    justify-content: center;   /* Centra horizontalmente
+    align-items: center;       /* Centra verticalmente
+    margin-top: 10px;
+}
+
+.contequipoIzquierdo img {
+    max-width: 100%;          /* Hace que la imagen no exceda el ancho del contenedor
+    height: auto;             /* Mantiene la proporción de la imagen
+    padding-bottom: 30px;
+}
+
+.contequipoIzquierdo {
+    position: relative;
+    width: 780px;
+    height: 470px;
+}
+
+.jugador {
+    position: absolute;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.jugador {
+    margin-top: -50px;
+    padding: 0;
+}
+
+.jugador-imagen {
+    width: 75px;
+    height: 75px;
+    display: block;
+    margin-top: auto;
+    margin-left: auto;
+    margin-bottom: -30px;
+    margin-right: auto;
+    border-radius: 50%;
+}
+
+.jugador span {
+    margin: 0;
+    padding: 0;
+    display: block;
+    line-height: 1.2; /* Controla la altura de línea para evitar espacios adicionales
+}
+
+
+/* Posiciones como antes, adaptadas para el campo horizontal
+.portero {
+    top: 58%;
+    left: 12%;
+    transform: translate(-50%, -50%);
+}
+
+.defensa1 { top: 34%; left: 25%; }
+.defensa2 { top: 82%; left: 32%; }
+.defensa3 { top: 12%; left: 32%; }
+.defensa4 { top: 60%; left: 25%; }
+
+.mediocentro1 { top: 26%; left: 55%; }
+.mediocentro2 { top: 65%; left: 55%; }
+.mediocentro3 { top: 45%; left: 44%; }
+
+.delantero1 { top: 78%; left: 72%; }
+.delantero2 { top: 47%; left: 78%; }
+.delantero3 { top: 14%; left: 72%; }*/
+
+.containerEquipo {
+    display: flex;
+    min-height: calc(100vh - 120px);
+    background-color: #f9f9f9;
+    width: 100%;
+}
+
+.left {
+    width: 60%;
+    height: 100%;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Alinea horizontalmente */
+    align-items: center; /* Alinea verticalmente */
+}
+
+.tituloIzq {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    flex-shrink: 0; /* Evita que el contenedor del título se encoja */
+}
+
+.tituloIzq h2 {
+    color: #ff4d4d;
+    display: inline-block;
+    border-bottom: 3px solid #333;
+    margin: 10px 0;
+}
+
+.contequipoIzquierdo {
+    position: relative;
+    width: 90%; /* Escalable para pantallas pequeñas */
+    max-width: 780px; /* Tamaño máximo para pantallas grandes */
+    aspect-ratio: 780 / 470; /* Mantiene proporción */
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.contequipoIzquierdo img {
+    width: 100%; /* Escala según el contenedor */
+    height: auto; /* Mantiene la proporción */
+    padding-bottom: 30px;
+}
+
+.jugador {
+    position: absolute;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+   /* font-size: calc(10px + 1vw); /* Escalable con el tamaño de la pantalla */
+}
+
+.jugador-imagen {
+    width: 10%; /* Proporcional al tamaño del campo */
+    max-width: 75px; /* Tamaño máximo */
+    height: auto; /* Mantiene proporción */
+    display: block;
+    margin-top: auto;
+    margin-left: auto;
+    margin-bottom: -30px;
+    margin-right: auto;
+    border-radius: 50%;
+}
+
+.jugador span {
+    margin: 0;
+    padding: 0;
+    display: block;
+    line-height: 1.2; /* Controla la altura de línea para evitar espacios adicionales */
+}
+
+/* Posiciones de jugadores, escaladas con porcentajes */
+.portero { top: 50%; left: 12%; transform: translate(-50%, -50%); }
+.defensa1 { top: 22%; left: 25%; }
+.defensa2 { top: 70%; left: 32%; }
+.defensa3 { top: 0%; left: 32%; }
+.defensa4 { top: 50%; left: 25%; }
+
+.mediocentro1 { top: 15%; left: 55%; }
+.mediocentro2 { top: 60%; left: 55%; }
+.mediocentro3 { top: 35%; left: 44%; }
+
+.delantero1 { top: 70%; left: 72%; }
+.delantero2 { top: 35%; left: 78%; }
+.delantero3 { top: 5%; left: 72%; }
+
+/* Media queries para pantallas más pequeñas */
+@media (max-width: 768px) {
+    .contequipoIzquierdo {
+        width: 100%; /* Usa todo el ancho disponible */
+        max-width: 500px; /* Reduce el tamaño máximo */
+    }
+
+    .jugador-imagen {
+        width: 12%; /* Ajusta el tamaño para dispositivos pequeños */
+        max-width: 50px;
+    }
+
+    .jugador {
+        font-size: calc(8px + 1vw); /* Reduce el tamaño del texto */
+    }
+}
+
+@media (max-width: 480px) {
+    .contequipoIzquierdo {
+        width: 100%; /* Campo ocupa todo el ancho */
+        max-width: 320px;
+    }
+
+    .jugador-imagen {
+        width: 15%; /* Tamaño reducido en dispositivos muy pequeños */
+        max-width: 40px;
+    }
+
+    .jugador {
+        font-size: calc(6px + 1vw); /* Texto más pequeño para móviles */
+    }
+}
+
+
+
+.right {
+    width: 40%;
+    height: 100%;
+    background-color: #f9f9f9;
+}
+
+
+.cuadrado {
+    width: 150px;
+    height: 150px;
+    background-color: white;
+    border: 2px solid #ff4d4d; /* Borde rojo */
+}
+
+.contCuadrado h2 {
+    margin-top: 10px;  /* Añadimos espacio entre el cuadrado y el nombre del equipo */
+    font-size: 1.5em;  /* Tamaño del texto del nombre del equipo */
+    color: #333333;       /* Color del texto (gris oscuro) */
+    text-align: center; /* Alineamos el texto al centro */
+    margin-bottom: 20px;
+}
+
+.contCuadrado h3 {
+    margin-top: 10px;  /* Añadimos espacio entre el cuadrado y el nombre del equipo */
+    font-size: 1.0em;  /* Tamaño del texto del nombre del equipo */
+    color: #ff4d4d;       /* Color del texto (gris oscuro) */
+    text-align: center; /* Alineamos el texto al centro */
+    margin-bottom: 20px;
+}
+
+.contCuadrado {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    flex-direction: column;  /* Cambiamos la disposición de los elementos en una columna (uno debajo del otro) */
+    justify-content: flex-start; /* Mantiene los elementos alineados hacia arriba si es necesario */
+    align-items: center;     /* Centramos los elementos horizontalmente */
+    /*height: 100vh;  */         /* Altura del contenedor igual a la altura de la ventana del navegador */
+    margin-top: 50px;        /* Espacio superior */
+}
+
+.partidosEquipo2 h3 {
+    width: 80%;
+    text-align: center; /* Centrar el texto */
+    margin-top: 5px; /* Añadir espacio superior si es necesario */
+    font-size: 14px;
+    color: #333333;
+}
+
+.partidosEquipo h3 {
+    width: 80%;
+    text-align: center; /* Centrar el texto */
+    margin-top: 5px; /* Añadir espacio superior si es necesario */
+    font-size: 14px;
+    color: #333333;
+}
+.partidosEquipo2 {
+    width: 100%;
+    text-align: center;
+    overflow-y: auto;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;  /* Cambiamos la disposición de los elementos en una columna (uno debajo del otro) */
+    justify-content: flex-start; /* Mantiene los elementos alineados hacia arriba si es necesario */
+    align-items: center;     /* Centramos los elementos horizontalmente */
+    /*height: 100vh;  */         /* Altura del contenedor igual a la altura de la ventana del navegador */
+    margin-top: 30px;        /* Espacio superior */
+}
+.partidosEquipo{
+    width: 100%;
+    text-align: center;
+    overflow-y: auto;
+    margin-bottom: 30px;
+}
+
+.partidosEquipo h2 {
+    color: #ff4d4d;
+    display: inline-block;
+    border-bottom: 3px solid #333;
+    margin-bottom: 20px;
+}
+
+.partidosEquipo2 h2 {
+    color: #ff4d4d;
+    display: inline-block;
+    border-bottom: 3px solid #333;
+    margin-bottom: 20px;
+}
+
+.partidoEquipo {
+    display: flex;               /* Usa flexbox para alinear elementos */
+    justify-content: center;     /* Centra el contenido */
+    /*margin: 20px 0; */            /* Margen arriba y abajo */
+    width: 100%;
+}
+
+.rectanguloEquipo {
+    width: 90%; /* Ancho del rectángulo */
+    height: 40px; /* Alto del rectángulo */
+    background-color: white; /* Color de fondo */
+    color: #333; /* Color del texto */
+    border: 3px solid #ff4d4d;
+    flex-direction: row;
+    display: flex; /* Usar flexbox para centrar el contenido */
+    align-items: center; /* Centrar verticalmente */
+    justify-content: space-between; /* Centrar horizontalmente */
+    margin: auto; /* Espacio alrededor */
+    margin-bottom: 2px;
+    margin-top: 20px;
+    border-radius: 5px; /* Bordes redondeados */
+}
+
+.equipo-izquierdaEquipo {
+    flex: 1;                    /* Ocupa el espacio disponible a la izquierda */
+    text-align: left;          /* Alineación a la izquierda */
+    margin-left: 5px;
+}
+
+.vsEquipo {
+    flex: 0;                    /* Toma solo el espacio necesario */
+    text-align: center;         /* Alineación al centro */
+}
+
+.equipo-derechaEquipo {
+    flex: 1;                    /* Ocupa el espacio disponible a la derecha */
+    text-align: right;         /* Alineación a la derecha */
+    margin-right: 5px;
+}
+
+.Contenedorcuadrados{
+    width: 100%;
+    display: flex;
+    justify-content: space-between; /* Opcional: Para separar los cuadrados */
+    align-items: center; /* Alinea los cuadrados y el texto verticalmente */
+}
+
+.contenedorNombreEquipo{
+    width: 100%;
+    display: flex;
+    justify-content: space-between; /* Opcional: Para separar los cuadrados */
+    align-items: center;
+}
+
+.localAbajo {
+    margin-left: 100px;
+    margin-bottom: 10px;
+}
+
+.visitanteAbajo {
+    margin-right: 80px;
+    margin-left: 255px;
+    margin-bottom: 10px;
+}
+
+.equipo1clasificacion{
+    margin-left: 120px;
+    color: #ff4d4d;
+}
+
+.equipo2clasificacion{
+    margin-right: 120px;
+    color: #ff4d4d;
+}
+
+.right11 {
+    width: 35%;
+    height: 100%;
+    background-color: #f9f9f9;
+    border-left: 4px solid #ff4d4d;
+}
+.right11 .contCuadrado img {
+    width: 150px; /* Ajusta el ancho de la imagen según necesites */
+    height: auto;
+    max-height: 300px; /* Controla el tamaño máximo de la imagen */
+}
+.right11 h3 {
+    font-size: 1.5em; /* Aumenta el tamaño de la fuente del nombre */
+    margin-top: 10px; /* Ajusta el espacio superior entre la imagen y el texto */
+    text-align: center;
+}
+
+.left11 {
+    width: 65%;
+    height: 100%;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Alinea horizontalmente */
+    align-items: center; /* Alinea verticalmente */
+}
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+.rightVotaciones {
+    width: 50%;
+    height: 100%;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Alinea horizontalmente */
+    align-items: center; /* Alinea verticalmente */
+    /*border-left: 4px solid #ff4d4d;*/
+}
+
+.leftVotaciones {
+    width: 50%;
+    height: 100%;
+    background-color: #f9f9f9;
+    border-right: 4px solid #ff4d4d;
+}
+
+.partidosEquipoVot {
+    width: 100%;
+    text-align: center;
+    overflow-y: auto;
+    margin: 20px auto;
+    /* flex: 1;    */               /* Permite que los contenedores de contenido ocupen el espacio restante */
+    /* padding: 20px;     */        /* Espacio interno */
+}
+
+.partidosEquipoVot h2 {
+    color: #333333;
+    display: inline-block;
+    border-bottom: 4px solid #333;
+    font-size: xx-large;
+    margin-bottom: 10px;
+}
+
+.partidoEquipoVot {
+    display: flex;               /* Usa flexbox para alinear elementos */
+    justify-content: center;     /* Centra el contenido */
+    /*margin: 20px 0; */            /* Margen arriba y abajo */
+    width: 100%;
+}
+
+.contCuadradoVot {
+    width: 100%;
+    display: flex;
+    flex-direction: column;  /* Cambiamos la disposición de los elementos en una columna (uno debajo del otro) */
+    justify-content: flex-start; /* Mantiene los elementos alineados hacia arriba si es necesario */
+    align-items: center;     /* Centramos los elementos horizontalmente */
+    /*height: 100vh;  */         /* Altura del contenedor igual a la altura de la ventana del navegador */
+    margin-top: 20px;        /* Espacio superior */
+}
+
+.contCuadradoVot h3 {
+    margin-top: 10px;  /* Añadimos espacio entre el cuadrado y el nombre del equipo */
+    font-size: 1.0em;  /* Tamaño del texto del nombre del equipo */
+    color: #ff4d4d;       /* Color del texto (gris oscuro) */
+    text-align: center; /* Alineamos el texto al centro */
+    margin-bottom: 20px;
+}
+
+.rectanguloEquipoVot {
+    width: 60%; /* Ancho del rectángulo */
+    height: 40px; /* Alto del rectángulo */
+    background-color: white; /* Color de fondo */
+    color: #333; /* Color del texto */
+    border: 3px solid #ff4d4d;
+    flex-direction: column;
+    display: flex; /* Usar flexbox para centrar el contenido */
+    align-items: center; /* Centrar verticalmente */
+    justify-content: center; /* Centrar horizontalmente */
+    margin: auto; /* Espacio alrededor */
+    margin-bottom: 2px;
+    margin-top: 20px;
+    border-radius: 5px; /* Bordes redondeados */
+}
+
+.rectanguloEquipoVot h2{
+    font-size: medium;
+}
+
+/* Contenedor de los mensajes condicionales */
+.mensaje-condicional {
+    display: block;  /* Asegura que ocupe toda la línea */
+    color: #ff4d4d; /* Color de texto para los mensajes */
+    font-size: 14px; /* Tamaño de fuente para los mensajes */
+}
+
+/* Estilo del formulario de búsqueda */
+.busqueda-form2 {
+    margin-top: 20px;
+    display: block;
+    flex-direction: row;  /* Asegura que los elementos del formulario estén en fila */
+    width: 60%;
+    gap: 10px; /* Espacio entre el campo de búsqueda y el botón */
+    margin-bottom: 70px; /* Separación al final del formulario */
+}
+
+.contenedor-busqueda-votos {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;  /* Asegura que los elementos del formulario estén en fila */
+    gap: 10px; /* Espacio entre el campo de búsqueda y el botón */
+}
+
+/* Para el caso en el que no hay mensaje, mantiene el espacio debajo de los formularios */
+.contenedor-busqueda-votos .mensaje-condicional:empty {
+    display: none; /* No mostrar los elementos vacíos */
+}
+
+/* Para hacer que los mensajes sean más visibles y ocupen todo el espacio disponible */
+.mensaje-condicional {
+    font-weight: bold; /* Puedes agregar negrita para que resalten más */
+    text-align: center; /* Alineación centrada para los mensajes */
+    background-color: #ffe6e6; /* Color de fondo para resaltar los mensajes */
+    padding: 10px; /* Espaciado interno */
+    border-radius: 8px; /* Bordes redondeados */
+}
+
+.busqueda-form {
+    margin-top: 20px; /* Espacio entre el formulario y el contenido superior */
+    display: flex;
+    width: 60%;
+    gap: 10px; /* Espacio entre el campo de búsqueda y el botón */
+}
+
+.busqueda-form input[type="search"], .contenedor-busqueda-votos input[type="search"]  {
+    width: 100%; /* Ajusta el ancho del campo de búsqueda */
+    padding: 10px; /* Espacio interno del campo para hacerlo más alto */
+    font-size: 16px;
+    border: 2px solid #333333;
+    border-radius: 4px; /* Bordes redondeados */
+}
+
+.busqueda-form button, .contenedor-busqueda-votos button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ff4d4d;
+    border: 2px solid #ff4d4d;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.busqueda-form button:hover, .contenedor-busqueda-votos button:hover {
+    background-color: white;
+    border: 2px solid #ff4d4d;
+    color: #ff4d4d; /* Color al pasar el cursor por encima */
+}
+
+.rectanguloEquipoVot11 {
+    width: 60%; /* Ancho del rectángulo */
+    height: 40px; /* Alto del rectángulo */
+    background-color: white; /* Color de fondo */
+    color: #333; /* Color del texto */
+    border: 3px solid #ff4d4d;
+    flex-direction: column;
+    display: flex; /* Usar flexbox para centrar el contenido */
+    align-items: center; /* Centrar verticalmente */
+    justify-content: center; /* Centrar horizontalmente */
+    margin: 30px auto;
+    border-radius: 5px; /* Bordes redondeados */
+}
+
+.rectanguloEquipoVot11 h2{
+    font-size: medium;
+}
+
+.containerEquipoVot {
+    display: flex;
+    /* min-height: calc(100vh - 120px);*/
+    background-color: #f9f9f9;
+    width: 100%;
+    height: 100%;
+}
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+.containerJugador {
+    display: flex;
+    flex-direction: column; /* Apila elementos verticalmente */
+    align-items: center; /* Centra horizontalmente los elementos */
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color: #f9f9f9;
+    width: 100%;
+    height: 100%;
+}
+
+.containerJugadorcontenido {
+    display: flex;
+    background-color: #f9f9f9;
+    justify-content: center;
+    width: 60%;
+    height: 100%;
+}
+
+.jugadorIzq {
+    width: 50%;
+    display: flex;
+    justify-content: right;
+}
+
+.jugadorDrch {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 40px;
+    padding-top: 30px;
+}
+
+.jugadorDrch h2, .jugadorDrch h3 {
+    display: block;
+    width: 100%;
+    clear: both;
+    /*margin: 5px 0;*/
+}
+
+.equipo-contenedorJugadores {
+    display: inline-flex; /* Asegura que el nombre del equipo y el escudo estén en la misma línea */
+    align-items: center;  /* Alinea verticalmente la imagen con el texto */
+}
+
+.equipo-contenedorJugadores img {
+    margin-left: 10px; /* Ajusta la distancia entre el nombre del equipo y la imagen del escudo */
+}
+
+.jugadorDrch h2 {
+    color: #333333;
+    border-bottom: 3px solid #ff4d4d;
+    margin-bottom: 30px;
+}
+
+.jugadorDrch h3 {
+    color: #ff4d4d;
+    padding-bottom: 20px;
+}
+
+.jugadorDrch span {
+    color: #333333; /* Cambia el color a negro para el texto dentro de span */
+    margin-left: 5px;
+}
+
+.estado-disponible {
+    background-color: #AEDD94;
+    color: #4C7A34;
+    width: 45%;
+    padding: 30px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    border-radius: 10px;
+    margin-top: 30px; /* Espacio entre contenido y rectángulo */
+    border: 3px solid #4C7A34;
+
+}
+.estado-dudoso {
+    background-color: #FEF8A0;
+    color: #8C8525;
+    width: 45%;
+    padding: 30px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    border-radius: 10px;
+    margin-top: 30px; /* Espacio entre contenido y rectángulo */
+    border: 3px solid #8C8525;
+
+}
+.estado-lesionado {
+    background-color: #FFB4B0;
+    color: #B70F0A;
+    width: 45%;
+    padding: 30px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    border-radius: 10px;
+    margin-top: 30px; /* Espacio entre contenido y rectángulo */
+    border: 3px solid #B70F0A;
+}
+/* Estilos del contenedor */
+.estado-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilo del label */
+.estado-label {
+    font-size: 16px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+/* Wrapper del select para incluir la flecha */
+.select-wrapper {
+    position: relative;
+    width: 200px;
+}
+
+/* Estilo del select */
+.estado-select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 3px solid #ff4d4d;
+    background-color: #F9F9F9;
+    color: #ff4d4d;
+    font-weight: bold;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 30px; /* Espacio para la flecha */
+}
+
+/* Flecha personalizada dentro del wrapper */
+.select-wrapper::after {
+    content: "▼";
+    font-size: 16px;
+    color: #ff4d4d;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+#suggestions {
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+.suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.suggestion-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* Estilo para el formulario */
+.busqueda-form2 {
+    position: relative; /* Hace que las sugerencias se posicionen dentro de este contenedor */
+}
+
+/* Contenedor de las sugerencias */
+.suggestions-boxVotos {
+    position: absolute;  /* Hace que las sugerencias aparezcan justo debajo del input */
+    top: 100%;           /* Asegura que las sugerencias estén justo debajo del input */
+    left: 0;             /* Alinea las sugerencias con el lado izquierdo del input */
+    width: 80%;         /* Asegura que el ancho sea igual al del input */
+    border: 3px solid #ff4d4d;  /* Bordes de las sugerencias */
+    border-radius: 5px;
+    font-weight: bold;
+    background-color: white;  /* Fondo blanco para las sugerencias */
+    max-height: 200px;   /* Limita la altura máxima de las sugerencias */
+    overflow-y: auto;    /* Agrega desplazamiento si hay muchas sugerencias */
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1); /* Sombra para las sugerencias */
+    z-index: 1000;       /* Asegura que las sugerencias se muestren encima de otros elementos */
+    scrollbar-width: auto; /* Ancho de la barra de desplazamiento */
+    scrollbar-color: #ff4d4d #f1f1f1; /* Color del 'thumb' y del fondo */
+}
+
+/* Estilo para cada item de sugerencia */
+.suggestion-itemVotos, .suggestion-itemVotosEquipo {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+}
+
+.suggestion-itemVotos:hover, .suggestion-itemVotosEquipo:hover {
+    background-color: #ff4d4d;  /* Cambia el fondo cuando se pasa el mouse por encima */
+    border: 3px solid #ff4d4d;  /* Bordes de las sugerencias */
+    color: #f9f9f9;
+}
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+
+/* Contenedor de comentarios */
+.comentarios-container {
+    width: 80%;
+    max-width: 900px;
+    margin: 20px auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.comentarios-container h2{
+    padding-bottom: 15px;
+    text-align: center;
+}
+
+/* Contenedor de la lista de comentarios con scroll */
+.comentarios-lista {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 400px; /* Altura máxima de la caja de comentarios */
+    overflow-y: auto;  /* Activa el scroll vertical cuando el contenido es mayor */
+    padding-right: 10px; /* Añadir un poco de espacio a la derecha para el scrollbar */
+    scrollbar-width: auto; /* Ancho de la barra de desplazamiento */
+    scrollbar-color: #ff4d4d #f1f1f1; /* Color del 'thumb' y del fondo */
+}
+
+/* Estilo individual de los comentarios */
+.comentario {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Estilo del usuario */
+.comentario-usuario {
+    font-weight: bold;
+    color: #ff4d4d;
+    margin-bottom: 5px;
+}
+
+/* Estilo del mensaje del comentario */
+.comentario-mensaje {
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+/* Estilo para el área de nuevo comentario */
+.nuevo-comentario {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Centra el contenido dentro del contenedor */
+}
+
+.nuevo-comentario h3{
+    padding-bottom: 15px;
+}
+
+textarea {
+    width: 100%;
+    height: 60px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    resize: none;
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #ff4d4d;
+    background-color: #fff;
+}
+
+.nuevo-comentario button {
+    padding: 10px 20px;
+    background-color: #ff4d4d;
+    color: white;
+    border: 3px solid #ff4d4d;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.nuevo-comentario button:hover {
+    background-color: #f9f9f9;
+    color: #ff4d4d;
+    border: 3px solid #ff4d4d;
+}
+
+
+
+/*-------------------------------------------------------------------------------------------------------------------------------*/
+
+.footer {
+    background-color: #444;
+    color: white;
+    padding: 2px 0;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-content div {
+    margin: 20px;
+}
+
+.footer h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #ff4d4d;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    margin: 10px 0;
+    border-top: 1px solid #ff4d4d;
+    padding-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-content div {
+        margin-bottom: 20px;
+    }
+}
