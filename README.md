@@ -1,6 +1,10 @@
 
 # Proyecto Sisinfo 🚀
 
+AUTORES: Samuel Corpas Puerto, Miguel Sabroso Sanz y Daniel Salas Sayas
+
+Proyecto realizado para la asignatura de sistemas de la información en 3º año de Ingeniería Informática en Unizar.
+
 Este proyecto utiliza **Docker Compose** para facilitar su despliegue y ejecución.
 
 ---
